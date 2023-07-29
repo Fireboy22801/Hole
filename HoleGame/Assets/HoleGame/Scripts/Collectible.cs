@@ -5,7 +5,6 @@ public class Collectible : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float size;
 
-
     private void Start()
     {
         GetComponent<Rigidbody>().sleepThreshold = 0;
