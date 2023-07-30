@@ -1,27 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSize : MonoBehaviour
 {
+    public static PlayerSize Instance { get; private set; }
+
     [Header("Settings")]
-    [SerializeField]private float scaleIncreaseTreshold;
-    [SerializeField]private float scaleStep;
-    private float scaleValue;
+    public float ScaleIncreaseTreshold;
+    public float scaleStep;
+
+    [HideInInspector] public float scaleValue;
+
+    public float points;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void CollectibleCollected(float objectSize)
     {
+        points += objectSize;
         scaleValue += objectSize;
 
-        if(scaleValue >= scaleIncreaseTreshold)
+        if (scaleValue >= ScaleIncreaseTreshold)
         {
+            scaleValue -= ScaleIncreaseTreshold;
             IncreaseScale();
-            scaleValue = scaleValue % scaleIncreaseTreshold;
         }
     }
 
     private void IncreaseScale()
     {
+        ScaleIncreaseTreshold *= 2f;
         transform.localScale += scaleStep * Vector3.one;
+        FindObjectOfType<CameraController>().IncreaseDistance();
     }
 }

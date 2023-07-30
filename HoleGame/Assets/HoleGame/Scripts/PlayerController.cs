@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,12 +6,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float screenPositionFollowThreshold;
     [SerializeField] private float moveSpeed;
     private Vector3 clickedPositionScreen;
-
-
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {

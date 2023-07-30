@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyTrigger : MonoBehaviour
@@ -12,7 +10,11 @@ public class DestroyTrigger : MonoBehaviour
         if (other.TryGetComponent(out Collectible collectible))
         {
             playerSize.CollectibleCollected(collectible.GetSize());
+
+            UI.Instance.AddText((int)other.gameObject.GetComponent<Collectible>().size, transform.position);
+            UI.Instance.IncreaseText();
             Destroy(other.gameObject);
         }
     }
+
 }
