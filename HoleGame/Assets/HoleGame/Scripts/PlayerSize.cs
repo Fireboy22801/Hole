@@ -10,8 +10,6 @@ public class PlayerSize : MonoBehaviour
 
     [HideInInspector] public float scaleValue;
 
-    public float points;
-
     private void Awake()
     {
         Instance = this;
@@ -19,7 +17,9 @@ public class PlayerSize : MonoBehaviour
 
     public void CollectibleCollected(float objectSize)
     {
-        points += objectSize;
+        GameManager.Instance.points += objectSize;
+
+        GameManager.Instance.CheckPoints();
         scaleValue += objectSize;
 
         if (scaleValue >= ScaleIncreaseTreshold)

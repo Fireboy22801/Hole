@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
     public static UI Instance { get; private set; }
-    const int POOL_SIZE = 10;
+    const int POOL_SIZE = 32;
 
     [SerializeField] private float floatingTime;
     [SerializeField] private TMP_Text points;
     [SerializeField] private TMP_Text targetNumber;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject gameOverMenu;
 
     private Queue<TMP_Text> textPool = new Queue<TMP_Text>();
     private List<ActiveText> activeText = new List<ActiveText>();
@@ -98,7 +100,36 @@ public class UI : MonoBehaviour
 
     public void IncreaseText()
     {
-        points.text = "Score: " + PlayerSize.Instance.points.ToString();
+        points.text = "Score: " + GameManager.Instance.points.ToString();
         targetNumber.text = "To Increse: " + PlayerSize.Instance.scaleValue.ToString() + "/" + PlayerSize.Instance.ScaleIncreaseTreshold.ToString();
+    }
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void Continue()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void Retry()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Game");
+    }
+
+    public void Exit()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("StartScene");
+    }
+
+    public void GameOverMenu()
+    {
+        gameOverMenu.SetActive(true);
     }
 }
